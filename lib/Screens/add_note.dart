@@ -37,7 +37,7 @@ class _AddNoteState extends State<AddNote> {
                             Navigator.pop(context);
                           },
                           icon: const Icon(
-                            Icons.arrow_back,
+                            Icons.close,
                             color: Colors.white,
                           ),
                         ),
@@ -47,9 +47,10 @@ class _AddNoteState extends State<AddNote> {
                             horizontal: 25, vertical: 25),
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.teal.shade600),
+                              backgroundColor:
+                                  Color.fromARGB(255, 18, 62, 103)),
                           onPressed: () {
-                            Navigator.pushNamed(context, "home_screen");
+                            Navigator.pop(context);
                           },
                           child: const Text('Publish'),
                         ),

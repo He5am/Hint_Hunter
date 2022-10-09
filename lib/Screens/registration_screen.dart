@@ -1,11 +1,12 @@
-// ignore_for_file: sort_child_properties_last, must_be_immutable, depend_on_referenced_packages
+// ignore_for_file: sort_child_properties_last, must_be_immutable, depend_on_referenced_packages, unnecessary_null_comparison, use_build_context_synchronously, avoid_print, constant_identifier_names
 
 import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:hinthunter/Screens/home_screen.dart';
+import 'package:hinthunter/Components/main_wrapper.dart';
+
 // import 'package:http/http.dart' as http;
 // import 'package:fluttertoast/fluttertoast.dart';
 // import 'package:image_picker/image_picker.dart';
@@ -98,7 +99,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   await _auth.createUserWithEmailAndPassword(
                                       email: email!, password: password!);
                               if (user != null) {
-                                Navigator.pushNamed(context, HomeScreen.id);
+                                Navigator.pushNamed(context, MainWrapper.id);
                               }
                               setState(() {
                                 progress?.dismiss();
@@ -228,50 +229,6 @@ class FormField extends StatelessWidget {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
-  }
-}
-
-const KTextFiekdDecuration = InputDecoration(
-  hintText: 'Enter a value',
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-  border: OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
-  enabledBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
-  focusedBorder: OutlineInputBorder(
-    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
-    borderRadius: BorderRadius.all(Radius.circular(32.0)),
-  ),
-);
-
-class Button extends StatelessWidget {
-  Button({required this.colour, required this.title, required this.onPressed});
-  final Color? colour;
-  final String? title;
-  final Function() onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: Material(
-        elevation: 5.0,
-        color: colour,
-        borderRadius: BorderRadius.circular(30.0),
-        child: MaterialButton(
-          onPressed: onPressed,
-          minWidth: 200.0,
-          height: 42.0,
-          child: Text(
-            '$title',
-            style: TextStyle(color: Colors.white),
-          ),
         ),
       ),
     );

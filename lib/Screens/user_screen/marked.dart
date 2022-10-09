@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class Marked extends StatefulWidget {
   const Marked({super.key});
   static String id = 'Marked';
@@ -13,11 +12,14 @@ class _MarkedState extends State<Marked> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
-        title: const Text('Marked'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.teal.shade700,
+        title: const Text(
+          'Marked',
+          style: TextStyle(fontFamily: "pacifico"),
+        ),
         centerTitle: true,
       ),
-      backgroundColor: Colors.teal,
     );
   }
 }

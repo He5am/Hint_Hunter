@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:hinthunter/Components/rounded_button.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:hinthunter/Screens/login_screen.dart';
 import 'package:hinthunter/Screens/registration_screen.dart';
@@ -93,7 +92,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 }
 
 class Button extends StatelessWidget {
-  Button({required this.colour, required this.title, required this.onPressed});
+  const Button(
+      {super.key,
+      required this.colour,
+      required this.title,
+      required this.onPressed});
   final Color? colour;
   final String? title;
   final Function() onPressed;

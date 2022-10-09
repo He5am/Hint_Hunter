@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
-import 'package:hinthunter/Screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hinthunter/Components/main_wrapper.dart';
 // import 'package:http/http.dart' as http;
 
 class LoginScreen extends StatefulWidget {
@@ -70,26 +70,28 @@ class _LoginScreenState extends State<LoginScreen> {
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.teal.shade800),
-                              
-                              onPressed: () async {
-                                try {
-                                  final progress = ProgressHUD.of(context);
-                                  setState(() {
-                                    progress?.show();
-                                  });
-                                  final user =
-                                      await _auth.signInWithEmailAndPassword(
-                                          email: email!, password: password!);
-                                  if (user != null) {
-                                    Navigator.pushNamed(context, HomeScreen.id);
-                                  }
-                                  setState(() {
-                                    progress?.dismiss();
-                                  });
-                                } catch (e) {
-                                  print(e);
-                                }
+                              onPressed: () {
+                                Navigator.pushNamed(context, MainWrapper.id);
                               },
+                              // onPressed: () async {
+                              //   try {
+                              //     final progress = ProgressHUD.of(context);
+                              //     setState(() {
+                              //       progress?.show();
+                              //     });
+                              //     final user =
+                              //         await _auth.signInWithEmailAndPassword(
+                              //             email: email!, password: password!);
+                              //     if (user != null) {
+                              //       Navigator.pushNamed(context, HomeScreen.id);
+                              //     }
+                              //     setState(() {
+                              //       progress?.dismiss();
+                              //     });
+                              //   } catch (e) {
+                              //     print(e);
+                              //   }
+                              // },
                               child: const Text(
                                 "Login",
                                 style: TextStyle(

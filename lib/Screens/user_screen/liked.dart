@@ -12,11 +12,14 @@ class _LikedState extends State<Liked> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.teal,
-        title: const Text('Liked'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.teal.shade700,
+        title: const Text(
+          'Liked',
+          style: TextStyle(fontFamily: "pacifico"),
+        ),
         centerTitle: true,
       ),
-      backgroundColor: Colors.teal,
     );
   }
 }
