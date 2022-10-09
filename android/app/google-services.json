@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "509711140677",
+    "project_id": "hint-hunter",
+    "storage_bucket": "hint-hunter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509711140677:android:a54b6779c82f57b784602c",
+        "android_client_info": {
+          "package_name": "com.He5am.hinthunter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509711140677-1uhhlqc0jqpg72450kjmcu6rrb2fr8a8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARlwACfHndZMrPxWh_nu4HEKueSsb4AH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509711140677-1uhhlqc0jqpg72450kjmcu6rrb2fr8a8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

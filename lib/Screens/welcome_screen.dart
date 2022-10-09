@@ -26,8 +26,11 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       duration: Duration(seconds: 1),
       vsync: this,
     );
-    animation = ColorTween(begin: Colors.blueGrey, end: Colors.white)
-        .animate(controller!);
+
+    animation = ColorTween(
+      begin: Colors.blueGrey,
+      end: Colors.white,
+    ).animate(controller!);
 
     controller!.forward();
 
@@ -83,6 +86,34 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                   Navigator.pushNamed(context, RegistrationScreen.id);
                 })
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class Button extends StatelessWidget {
+  Button({required this.colour, required this.title, required this.onPressed});
+  final Color? colour;
+  final String? title;
+  final Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: Material(
+        elevation: 5.0,
+        color: colour,
+        borderRadius: BorderRadius.circular(30.0),
+        child: MaterialButton(
+          onPressed: onPressed,
+          minWidth: 200.0,
+          height: 42.0,
+          child: Text(
+            '$title',
+            style: TextStyle(color: Colors.black),
+          ),
         ),
       ),
     );
