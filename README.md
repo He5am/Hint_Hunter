@@ -1,6 +1,7 @@
-# hinthunter
+# Hint Hunter
+ 
 
-A new Flutter project.
+Read Less Learn More ;)
 
 ## Getting Started
 
