@@ -10,15 +10,30 @@ class Marked extends StatefulWidget {
 class _MarkedState extends State<Marked> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.teal.shade700,
-        title: const Text(
-          'Marked',
-          style: TextStyle(fontFamily: "pacifico"),
+    return WillPopScope(
+      onWillPop: () => Future.value(false),
+      child: Scaffold(
+        backgroundColor: Colors.teal,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.teal.shade700,
+          title: const Text(
+            'Marked',
+            style: TextStyle(fontFamily: "pacifico"),
+          ),
+          centerTitle: true,
         ),
-        centerTitle: true,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Center(
+                  child: Text("Your marked page is  empty"),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

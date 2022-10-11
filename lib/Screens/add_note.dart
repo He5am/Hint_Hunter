@@ -48,7 +48,7 @@ class _AddNoteState extends State<AddNote> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor:
-                                  Color.fromARGB(255, 18, 62, 103)),
+                                 const  Color.fromARGB(255, 18, 62, 103)),
                           onPressed: () {
                             Navigator.pop(context);
                           },

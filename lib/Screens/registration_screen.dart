@@ -1,11 +1,10 @@
 // ignore_for_file: sort_child_properties_last, must_be_immutable, depend_on_referenced_packages, unnecessary_null_comparison, use_build_context_synchronously, avoid_print, constant_identifier_names
 
-import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:hinthunter/Components/main_wrapper.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 // import 'package:http/http.dart' as http;
 // import 'package:fluttertoast/fluttertoast.dart';
@@ -21,12 +20,42 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
+  final db = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+//This method is used to create the user in firestore
+  Future<void> createUser(
+    String uid,
+    String name,
+    String email,
+    String username,
+  ) async {
+    //Creates the user doc named whatever the user uid is in te collection "users"
+    //and adds the user data
+    await db.collection("users").doc(uid).set({
+      'Name': name,
+      'Email': email,
+      "Username": username,
+    });
+  }
+
+  //This function registers a new user with auth and then calls the function createUser
+  Future<void> registerUser(
+      String email, String password, String username, String name) async {
+    //Create the user with auth
+    UserCredential result = await auth.createUserWithEmailAndPassword(
+        email: email, password: password);
+
+    //Create the user in firestore with the user data
+    createUser(result.user!.uid, name, username, email);
+  }
 
   String? email;
   String? username;
+  String? name;
   String? confirmPassword;
   String? password;
-  File? image;
+  // File? image;
   // PickedFile? _imageFile;
   // final ImagePicker _picker = ImagePicker();
   @override
@@ -56,6 +85,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           height: 48.0,
                         ),
                         FormField(
+                          hintText: "Name",
+                          changed: (value) {
+                            name = value;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 14.0,
+                        ),
+                        FormField(
                           hintText: "Email",
                           changed: (value) {
                             email = value;
@@ -65,14 +103,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           height: 14.0,
                         ),
                         FormField(
-                          hintText: "Enter Your Password",
+                          hintText: "Username",
+                          changed: (value) {
+                            username = value;
+                          },
+                        ),
+                        const SizedBox(
+                          height: 14.0,
+                        ),
+                        FormField(
+                          hintText: "Enter Password",
                           changed: (value) {
                             password = value;
                           },
                         ),
-                        // const SizedBox(
-                        //   height: 14.0,
-                        // ),
+                        const SizedBox(
+                          height: 14.0,
+                        ),
+                        FormField(
+                          hintText: "Confirm Your Password",
+                          changed: (value) {
+                            confirmPassword = value;
+                          },
+                        ),
+
                         // TextFormField(
 
                         //   textAlign: TextAlign.center,

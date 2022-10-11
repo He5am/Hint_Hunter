@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:hinthunter/Components/hint_box.dart';
+import 'package:hinthunter/Screens/user_screen/hint_page.dart';
 // import 'package:hinthunter/Screens/add_note.dart';
 // import 'package:hinthunter/Screens/user_screen/notes.dart';
 
@@ -31,7 +33,48 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body: SingleChildScrollView(
           child: Column(
-            children: const [],
+            children: [
+              HintBox(
+                onpressed: () async {
+                  Navigator.pushNamed(context, Hintpage.id);
+                },
+              ),
+              HintBox(
+                onpressed: () async {
+                  Navigator.pushNamed(context, Hintpage.id);
+                },
+              ),
+              HintBox(
+                onpressed: () async {
+                  Navigator.pushNamed(context, Hintpage.id);
+                },
+              ),
+              HintBox(
+                onpressed: () async {
+                  Navigator.pushNamed(context, Hintpage.id);
+                },
+              ),
+              HintBox(
+                onpressed: () async {
+                  Navigator.pushNamed(context, Hintpage.id);
+                },
+              ),
+              HintBox(
+                onpressed: () async {
+                  Navigator.pushNamed(context, Hintpage.id);
+                },
+              ),
+              HintBox(
+                onpressed: () async {
+                  Navigator.pushNamed(context, Hintpage.id);
+                },
+              ),
+              HintBox(
+                onpressed: () async {
+                  Navigator.pushNamed(context, Hintpage.id);
+                },
+              ),
+            ],
           ),
         ),
       ),
