@@ -28,7 +28,7 @@ class _LikedState extends State<Liked> {
             child: Column(
               children: const [
                 Center(
-                  child: Text("Your Liked page is  empty"),
+                  child: Text("Your Liked page is empty"),
                 )
               ],
             ),

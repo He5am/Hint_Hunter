@@ -43,7 +43,7 @@ dependencies:
   firebase_auth: ^3.4.2
   cloud_firestore: ^3.3.0
   flutter_progress_hud: ^2.0.2
-  # image_picker: ^0.8.3+1
+  image_picker: ^0.8.6
   #fluttertoast: ^8.0.9
   
   

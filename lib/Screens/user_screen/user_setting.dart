@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hinthunter/Screens/user_screen/profile.dart';
 import 'package:hinthunter/Screens/welcome_screen.dart';
+import 'package:image_picker/image_picker.dart';
 
 class UserSetting extends StatefulWidget {
   const UserSetting({super.key});
@@ -12,6 +16,22 @@ class UserSetting extends StatefulWidget {
 }
 
 class _UserSettingState extends State<UserSetting> {
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (image == null) return;
+      final imageTemporary = File(image.path);
+      setState(() {
+        this.image = imageTemporary;
+      });
+    } on PlatformException catch (e) {
+      print('failed : $e');
+    }
+  }
+
+  File? image;
+  PickedFile? _imageFile;
+  final ImagePicker _picker = ImagePicker();
   String? email;
   String? username;
   String? name;
@@ -55,23 +75,26 @@ class _UserSettingState extends State<UserSetting> {
                         backgroundColor: Colors.teal.shade700,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            'welcome_screen', (Route<dynamic> route) => false);
                       },
-                      child: const Text('save'),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Text('Logout'),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Icon(Icons.logout_outlined)
+                        ],
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            const CircleAvatar(
-              radius: 60,
-              backgroundImage: AssetImage('assets/profile.jpg'),
-              // backgroundImage: _imageFile == null
-              //     ? AssetImage('assets/profile.jpg')
-              //     : FileImage(
-              //         File(_imageFile?.path),
-              //       ),
-            ),
+            imageProfile(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
@@ -85,7 +108,7 @@ class _UserSettingState extends State<UserSetting> {
                           height: 48.0,
                         ),
                         FormField(
-                          hintText: "Name",
+                          hintText: "\$Name",
                           changed: (value) {
                             name = value;
                           },
@@ -94,7 +117,7 @@ class _UserSettingState extends State<UserSetting> {
                           height: 14.0,
                         ),
                         FormField(
-                          hintText: "Email",
+                          hintText: "\$Email",
                           changed: (value) {
                             email = value;
                           },
@@ -103,7 +126,7 @@ class _UserSettingState extends State<UserSetting> {
                           height: 14.0,
                         ),
                         FormField(
-                          hintText: "Username",
+                          hintText: "\$Username",
                           changed: (value) {
                             username = value;
                           },
@@ -112,7 +135,7 @@ class _UserSettingState extends State<UserSetting> {
                           height: 14.0,
                         ),
                         FormField(
-                          hintText: "correct Password",
+                          hintText: "current Password",
                           changed: (value) {
                             password = value;
                           },
@@ -178,21 +201,9 @@ class _UserSettingState extends State<UserSetting> {
                                 backgroundColor: Colors.teal.shade700,
                               ),
                               onPressed: () {
-                                FirebaseAuth.instance.signOut();
-                                Navigator.of(context).pushNamedAndRemoveUntil(
-                                    'welcome_screen',
-                                    (Route<dynamic> route) => false);
+                                Navigator.pop(context);
                               },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  Text('Logout'),
-                                  SizedBox(
-                                    width: 8,
-                                  ),
-                                  Icon(Icons.logout_outlined)
-                                ],
-                              ),
+                              child: const Text('save'),
                             ),
                           ),
                         ),
@@ -207,8 +218,93 @@ class _UserSettingState extends State<UserSetting> {
       ),
     );
   }
+
+  void takePhoto(ImageSource source) async {
+    final pickedFile = await _picker.pickImage(source: source);
+    setState(() {
+      _imageFile = pickedFile as PickedFile?;
+    });
+  }
+
+  Widget imageProfile() {
+    return Center(
+      child: Stack(
+        children: [
+          CircleAvatar(
+            radius: 60,
+            // backgroundImage: AssetImage('assets/profile.jpg'),
+            backgroundImage: _imageFile == null
+                ? const AssetImage('assets/profile.jpg') as ImageProvider
+                : FileImage(
+                    File(_imageFile!.path),
+                  ),
+          ),
+          Positioned(
+            child: InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) {
+                    return bottomsheet();
+                  },
+                );
+              },
+              child: const Icon(
+                size: 28,
+                color: Colors.teal,
+                Icons.camera_alt,
+              ),
+            ),
+            bottom: 10,
+            right: 15,
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget bottomsheet() {
+    return Container(
+      color: Colors.transparent,
+      height: 100,
+      width: MediaQuery.of(context).size.width,
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: Column(
+        children: [
+          // ignore: prefer_const_constructors
+          Text(
+            "Choose profile photo",
+            style: const TextStyle(fontSize: 20, color: Colors.white),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton.icon(
+                onPressed: () {
+                  takePhoto(ImageSource.camera);
+                },
+                icon: const Icon(Icons.camera),
+                label: const Text('Camera'),
+              ),
+              ElevatedButton.icon(
+                onPressed: () {
+                  takePhoto(ImageSource.gallery);
+                },
+                icon: const Icon(Icons.image),
+                label: const Text('Gallery'),
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
 }
 
+// ignore: must_be_immutable
 class FormField extends StatelessWidget {
   String? hintText;
 

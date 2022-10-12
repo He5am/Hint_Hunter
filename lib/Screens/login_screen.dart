@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: Colors.teal,
       body: ProgressHUD(
         child: Builder(builder: (context) {
-          return Center(
+          return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
@@ -56,6 +56,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             FormField(
+                              obscure: false,
+                              keyboardType: TextInputType.emailAddress,
                               hintText: "Email",
                               changed: (value) {
                                 email = value;
@@ -63,6 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(height: 14),
                             FormField(
+                              keyboardType: TextInputType.text,
+                              obscure: true,
                               hintText: "Password",
                               changed: (value) {
                                 password = value;
@@ -85,7 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       await _auth.signInWithEmailAndPassword(
                                           email: email!, password: password!);
                                   if (user != null) {
-                                    Navigator.pushNamed(context, HomeScreen.id);
+                                    Navigator.pushNamed(
+                                        context, MainWrapper.id);
                                   }
                                   setState(() {
                                     progress?.dismiss();
@@ -118,13 +123,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
 class FormField extends StatelessWidget {
   String? hintText;
-
+  bool? obscure;
+  TextInputType? keyboardType;
   final Function(String) changed;
 
-  FormField({super.key, required this.hintText, required this.changed});
+  FormField(
+      {super.key,
+      required this.hintText,
+      required this.changed,
+      required this.obscure,
+      required this.keyboardType});
   @override
   Widget build(BuildContext context) {
     return TextField(
+      keyboardType: keyboardType,
+      obscureText: obscure!,
       onChanged: changed,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(

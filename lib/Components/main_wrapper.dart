@@ -4,6 +4,7 @@ import 'package:hinthunter/Screens/user_screen/home.dart';
 import 'package:hinthunter/Screens/user_screen/liked.dart';
 import 'package:hinthunter/Screens/user_screen/marked.dart';
 import 'package:hinthunter/Screens/user_screen/profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MainWrapper extends StatefulWidget {
   const MainWrapper({super.key});
@@ -24,13 +25,32 @@ class _MainWrapperState extends State<MainWrapper> {
   ];
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = const HomeScreen();
+  final _auth = FirebaseAuth.instance;
+  User? loggedInUser;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.teal.shade700,
+        backgroundColor: Colors.teal.shade600,
         onPressed: () => Navigator.pushNamed(context, AddNote.id),
         child: const Icon(
           Icons.add,
@@ -43,7 +63,7 @@ class _MainWrapperState extends State<MainWrapper> {
         child: BottomAppBar(
           color: Colors.teal.shade600,
           shape: const CircularNotchedRectangle(),
-          notchMargin: 3,
+          notchMargin: 5,
           child: SizedBox(
             height: 63,
             child: Row(
@@ -59,10 +79,12 @@ class _MainWrapperState extends State<MainWrapper> {
                         padding: const EdgeInsets.all(1),
                         splashColor: Colors.teal,
                         onPressed: () {
-                          setState(() {
-                            currentScreen = const HomeScreen();
-                            currentTab = 0;
-                          });
+                          setState(
+                            () {
+                              currentScreen = const HomeScreen();
+                              currentTab = 0;
+                            },
+                          );
                         },
                         child: Icon(
                           Icons.home_rounded,
@@ -76,10 +98,12 @@ class _MainWrapperState extends State<MainWrapper> {
                         shape: const CircleBorder(),
                         padding: const EdgeInsets.all(1),
                         onPressed: () {
-                          setState(() {
-                            currentScreen = const Marked();
-                            currentTab = 1;
-                          });
+                          setState(
+                            () {
+                              currentScreen = const Marked();
+                              currentTab = 1;
+                            },
+                          );
                         },
                         child: Icon(
                           Icons.bookmark_added_rounded,
@@ -87,7 +111,7 @@ class _MainWrapperState extends State<MainWrapper> {
                               ? const Color.fromARGB(255, 18, 62, 103)
                               : Colors.white,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -101,10 +125,12 @@ class _MainWrapperState extends State<MainWrapper> {
                         padding: const EdgeInsets.all(1),
 
                         onPressed: () {
-                          setState(() {
-                            currentScreen = const Liked();
-                            currentTab = 2;
-                          });
+                          setState(
+                            () {
+                              currentScreen = const Liked();
+                              currentTab = 2;
+                            },
+                          );
                         },
                         // ignore: prefer_const_constructors
                         child: Icon(
@@ -118,10 +144,12 @@ class _MainWrapperState extends State<MainWrapper> {
                         shape: const CircleBorder(),
                         padding: const EdgeInsets.all(1),
                         onPressed: () {
-                          setState(() {
-                            currentScreen = const Profile();
-                            currentTab = 3;
-                          });
+                          setState(
+                            () {
+                              currentScreen = const Profile();
+                              currentTab = 3;
+                            },
+                          );
                         },
                         child: Icon(
                           Icons.person,
@@ -138,19 +166,6 @@ class _MainWrapperState extends State<MainWrapper> {
           ),
         ),
       ),
-      // bottomNavigationBar: BottomNav(
-      //   controller: mypage,
-      // ),
-      // body: PageView(
-      //   controller: mypage,
-      //   children: const [
-      //     HomeScreen(),
-      //     Marked(),
-      //     Liked(),
-      //     Profile(),
-      //   ],
-
-      // ),
     );
   }
 }

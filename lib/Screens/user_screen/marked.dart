@@ -26,9 +26,9 @@ class _MarkedState extends State<Marked> {
         body: Center(
           child: SingleChildScrollView(
             child: Column(
-              children: [
+              children: const [
                 Center(
-                  child: Text("Your marked page is  empty"),
+                  child: Text("Your marked page is empty"),
                 )
               ],
             ),

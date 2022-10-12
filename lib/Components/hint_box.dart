@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 
 class HintBox extends StatelessWidget {
@@ -32,7 +34,7 @@ class HintBox extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.only(top: 15, bottom: 5.0),
                           child: Text(
-                            "Data@data",
+                            "User@Username",
                             style: TextStyle(color: Colors.white),
                           ),
                         ),

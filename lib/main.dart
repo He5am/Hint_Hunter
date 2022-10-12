@@ -33,6 +33,7 @@ class HintHunter extends StatelessWidget {
         hoverColor: Colors.transparent,
         shadowColor: Colors.transparent,
         primaryColor: Colors.transparent,
+        bottomSheetTheme: BottomSheetThemeData(backgroundColor: Colors.black45),
       ),
       debugShowCheckedModeBanner: false,
       initialRoute: MainWrapper.id,
